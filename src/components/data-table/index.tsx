@@ -3,73 +3,71 @@ import { FixedSizeList as List } from "react-window";
 
 import { Bet } from '../../types/bet';
 import { Cell, Column, Row } from './styled';
+import { BET_VALUE, CELL_SIZE } from '../../constants';
+import { SelectedBet } from '../../contexts/bet';
 
 interface Props {
   data: Bet[]
+  onSelectData: (bet: SelectedBet) => void; 
+  onRemoveData: (id: string) => void; 
+  selectedData: SelectedBet[]
 }
-const DataTable = ({ data }: Props) => {
-  const cellRenderer = useCallback(({ bet }: { bet: Bet }) => {
-    return (
-      <Column key={bet.NID}>
-        <Row>
-          <Cell textAlign='left' width='1000px'>{bet.D} {bet.DAY} {bet.LN}</Cell>
-          <Cell>Yorumlar</Cell>
-          <Cell></Cell>
-          <Cell>1</Cell>
-          <Cell>x</Cell>
-          <Cell>2</Cell>
-          <Cell>Alt</Cell>
-          <Cell>Üst</Cell>
-          <Cell>H1</Cell>
-          <Cell>1</Cell>
-          <Cell>x</Cell>
-          <Cell>2</Cell>
-          <Cell>H2</Cell>
-          <Cell>1-X</Cell>
-          <Cell>1-2</Cell>
-          <Cell>X-2</Cell>
-          <Cell>Var</Cell>
-          <Cell>Yok</Cell>
-          <Cell>+99</Cell>
-        </Row>
 
-        <Row>
-          <Cell textAlign='left' width='1000px'><b>{bet.C}</b> {bet.T} {bet.N}</Cell>
-          <Cell>Yorumlar</Cell>
-          <Cell>{"MBS"}</Cell>
-          <Cell>{"6.71"}</Cell>
-          <Cell>{bet.OCG[1].OC[1].O}</Cell>
-          <Cell></Cell>
-          <Cell>{"7.34"}</Cell>
-          <Cell>{"1.51"}</Cell>
-          <Cell></Cell>
-          <Cell></Cell>
-          <Cell></Cell>
-          <Cell></Cell>
-          <Cell></Cell>
-          <Cell>1.79</Cell>
-          <Cell>{bet.OCG[2].OC[4].O}</Cell>
-          <Cell>1.35</Cell>
-          <Cell></Cell>
-          <Cell></Cell>
-          <Cell>3</Cell>
-        </Row>
-      </Column>
-    );
-  }, []);
+const formatSelectedData = (bet: Bet): SelectedBet =>({
+  id: bet.NID,
+  code: bet.C,
+  price: BET_VALUE,
+  match: bet.N,
+  rate: bet.OCG[1].OC[1].O
+})
+
+const DataTable = ({ data, selectedData, onSelectData, onRemoveData }: Props) => {
+
+  const renderRow = useCallback(
+    ({ bet, style, isSelected }: {bet: Bet, style: React.CSSProperties, isSelected: boolean}) => {
+      const handleSelectData = (bet: Bet) => {
+        if(isSelected) {
+          onRemoveData(bet.NID)
+        } 
+        else{
+          onSelectData(formatSelectedData(bet))
+        }
+      }
+      return (
+        <Column style={style} key={bet.NID}>
+          <Row>
+            <Cell textAlign='left' width='500px'>{`${bet.D}  ${bet.DAY} ${bet.LN}`}</Cell>
+            <Cell width='140px'>Yorumlar</Cell>
+            <Cell></Cell>
+            <Cell>1</Cell>
+            <Cell width='400px'>x</Cell>
+            <Cell>2</Cell>
+          </Row>
+       
+          <Row>
+            <Cell textAlign='left' width='500px'><b style={{ marginRight: 3 }}>{bet.C}</b> {' '}{bet.T} {bet.N}</Cell>
+            <Cell width='140px'>Yorumlar</Cell>
+            <Cell>{bet.OCG[1].MBS}</Cell>
+            <Cell>{"6.71"}</Cell>
+            <Cell width='400px' isSelected={isSelected} onClick={()=>handleSelectData(bet)}>{bet.OCG[1].OC[1].O} (SEÇİLEBİLİR)</Cell>
+            <Cell></Cell>
+          </Row>
+        </Column>
+      );
+    }, []);
 
   return (
     <List
-      innerElementType="ul"
       itemData={data}
       itemCount={data.length}
-      itemSize={80}
-      height={80 * data.length}
+      itemSize={CELL_SIZE}
+      height={1200}
       width="100%"
     >
-      {({ data, index }) => {
-        const bet = data[index]
-        return cellRenderer({ bet })
+      {({ data, index, style }) => {
+        const bet = data[index] as Bet;
+        const isSelected = selectedData.some((d) => d.id === bet.NID)
+        return renderRow({ bet, style, isSelected })
       }}
     </List>
 
