@@ -1,6 +1,6 @@
 import React from 'react';
 import { BasketContainer, Item, Items } from './styled';
-import { SelectedBet } from '../../contexts/bet';
+import { SelectedBet } from '@contexts/bet';
 
 interface Props {
     items: SelectedBet[];

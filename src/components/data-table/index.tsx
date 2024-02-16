@@ -1,10 +1,10 @@
 import React, { useCallback } from 'react';
 import { FixedSizeList as List } from "react-window";
 
-import { Bet } from '../../types/bet';
+import { Bet } from '@src/types/bet';
 import { Cell, Column, Row } from './styled';
-import { BET_VALUE, CELL_SIZE } from '../../constants';
-import { SelectedBet } from '../../contexts/bet';
+import { BET_VALUE, CELL_SIZE } from '@src/constants';
+import { SelectedBet } from '@contexts/bet';
 
 interface Props {
   data: Bet[]

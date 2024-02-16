@@ -24,7 +24,14 @@
     "useUnknownInCatchVariables": true,
     
     // Modules Configuration
-    "baseUrl": "./",
+    "baseUrl": ".",
+    "paths": {
+      "@src/*": ["src/*"],
+      "@components/*": ["src/components/*"],
+      "@hooks/*": ["src/hooks/*"],
+      "@types/*": ["src/types/*"],
+      "@contexts/*": ["src/contexts/*"],
+    },
     "module": "ES2022",
     "moduleResolution": "node",
     

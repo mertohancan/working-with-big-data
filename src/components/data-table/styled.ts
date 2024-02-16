@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { CELL_SIZE } from '../../constants';
+import { CELL_SIZE } from '@src/constants';
 
 export const Column = styled.div`
   display: flex;

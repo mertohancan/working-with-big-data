@@ -1,8 +1,8 @@
 import React from 'react';
-import DataTable from '../../components/data-table';
-import { SelectedBet, useBet } from '../../contexts/bet';
-import BasketComponent from '../../components/basket';
-import { useGetBets } from '../../hooks/useGetBets';
+import DataTable from '@components/data-table';
+import { SelectedBet, useBet } from '@contexts/bet';
+import BasketComponent from '@components/basket';
+import { useGetBets } from '@hooks/useGetBets';
 
 const Home = () =>{
   const { bets } = useGetBets();
