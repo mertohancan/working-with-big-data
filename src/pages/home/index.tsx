@@ -3,9 +3,10 @@ import DataTable from '@components/data-table';
 import { SelectedBet, useBet } from '@contexts/bet';
 import BasketComponent from '@components/basket';
 import { useGetBets } from '@hooks/useGetBets';
+import Loader from '@src/components/loader';
 
 const Home = () =>{
-  const { bets } = useGetBets();
+  const { bets, isLoading } = useGetBets();
   const { state, dispatch } = useBet();
 
   const handleSelectBet = (bet: SelectedBet) => {
@@ -18,12 +19,18 @@ const Home = () =>{
 
   return (
     <div>
-      <DataTable
-        selectedData={state.selectedBets}
-        onSelectData={handleSelectBet}
-        onRemoveData={handleRemoveBet}
-        data={bets} />
-      <BasketComponent items={state.selectedBets} totalPrice={state.totalPrice} />
+      {isLoading ?
+       <Loader /> 
+         :
+          <>
+        <DataTable
+          selectedData={state.selectedBets}
+          onSelectData={handleSelectBet}
+          onRemoveData={handleRemoveBet}
+          data={bets} />
+        <BasketComponent items={state.selectedBets} totalPrice={state.totalPrice} />
+      </>}
+
     </div>
   )
 }
