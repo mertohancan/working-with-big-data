@@ -6,7 +6,13 @@ module.exports = {
   mode: "development",
   output: {
     filename: "bundle.[fullhash].js",
-    path: path.resolve(__dirname, "dist"),
+    publicPath: '/',
+    path: path.resolve(__dirname, 'public')
+  },
+  devServer: {
+    static: {
+      directory: path.join(__dirname, "public")
+    },
   },
   plugins: [
     new HtmlWebpackPlugin({
