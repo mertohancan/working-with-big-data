@@ -3,16 +3,16 @@ const path = require("path");
 
 module.exports = {
   entry: "./src/index.tsx",
-  mode: "development",
+  mode: "production", // Change mode to production for optimized build
   output: {
-    filename: "bundle.[fullhash].js",
-    publicPath: '/',
-    path: path.resolve(__dirname, 'public')
+    filename: "bundle.[contenthash].js", // Change [fullhash] to [contenthash]
+    publicPath: '/', // This might not be needed if your project doesn't rely on absolute paths
+    path: path.resolve(__dirname, 'build') // Change 'public' to 'build' for Netlify's default directory
   },
-  devServer: {
-    static: {
-      directory: path.join(__dirname, "public")
-    },
+  performance: {
+    hints: false,
+    maxEntrypointSize: 512000,
+    maxAssetSize: 512000
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -21,7 +21,7 @@ module.exports = {
   ],
   resolve: {
     modules: [__dirname, "src", "node_modules"],
-    extensions: ["*", ".js", ".jsx", ".tsx", ".ts"],
+    extensions: [".js", ".jsx", ".tsx", ".ts"], // Removed "*", unnecessary
     alias: {
       "@src": path.resolve(__dirname, "src"),
       "@components": path.resolve(__dirname, "src/components"),
