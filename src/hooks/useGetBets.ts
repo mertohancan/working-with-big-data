@@ -19,7 +19,6 @@ export const useGetBets = () => {
         setIsLoading(false)
       } catch (error) {
         setIsLoading(false)
-        setIsLoading(true)
         console.error('Hata:', error);
       }
     }
