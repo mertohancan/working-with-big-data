@@ -1,9 +1,9 @@
 import React from 'react';
 import DataTable from '@components/data-table';
+import Loader from '@components/loader';
 import { SelectedBet, useBet } from '@contexts/bet';
 import BasketComponent from '@components/basket';
 import { useGetBets } from '@hooks/useGetBets';
-import Loader from '@src/components/loader';
 
 const Home = () =>{
   const { bets, isLoading } = useGetBets();
