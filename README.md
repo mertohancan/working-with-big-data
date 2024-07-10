@@ -13,4 +13,3 @@ In the project directory, you can run:
 
 Runs the app in the development mode.\
 Open [http://localhost:8080](http://localhost:8080) to view it in the browser.
-Or you can visit production [https://nesine-fe-case.netlify.app](https://nesine-fe-case.netlify.app/)
